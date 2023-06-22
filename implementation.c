@@ -11,7 +11,6 @@
 #define NUM_POINTS 10000
 #define filename "dataBig.txt"
 
-
 typedef struct rtree_node rtree_node;
 typedef struct rtree rtree;
 
@@ -107,10 +106,14 @@ int main()
     }
     fclose(file);
     // Create an r tree from leaf nodes
+    // insert a rectangle in the r tree
 
     rtree *my_tree = create_r_tree(rects);
 
-    //Searching for a query rectangle
+    // inserting a point
+    // rectangle *abc = createRect(1, 2, 1, 2);
+    // insertfunction(my_tree, *abc);
+    // Searching for a query rectangle
 
     printf("Searching for all points in query rectangle\n");
     rectangle query = *(createRect(804484, 747133, 804484, 747133));
@@ -125,7 +128,7 @@ int main()
     printf("Traversing R tree:\n");
     traverse(*my_tree);
     printf("Traversal Successful\n");
-  }
+}
 
 rectangle *createRect(float x_min, float y_min, float x_max, float y_max)
 {
@@ -448,8 +451,9 @@ rtree_node **packSortedSlicesIntoNodes(slice *slices, int noOfSlices)
         add_rectangle_to_node(leafNodes[noOfLeaves - 1], *rectArray[x++]);
     }
 
-    for(int i=0;i<noOfSlices;i++){
-      free(slices[i].sliceEle);
+    for (int i = 0; i < noOfSlices; i++)
+    {
+        free(slices[i].sliceEle);
     }
     free(slices);
     return leafNodes;
@@ -968,7 +972,7 @@ void adjust(rtree_node *node)
         }
     }
 
-    rtree_node *par = node->parent; 
+    rtree_node *par = node->parent;
     rtree_node **arr = par->children;
     for (int i = 0; i < par->num_entries; i++)
     {
